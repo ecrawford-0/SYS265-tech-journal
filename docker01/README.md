@@ -1,1 +1,1 @@
-docker01 contiguration
+docker configuration
