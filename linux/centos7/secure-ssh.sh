@@ -48,5 +48,8 @@ sudo chmod 600 /home/$user/.ssh/authorized_keys
 sudo chown -R $user:$user /home/$user/.ssh 
 
 # remove PermitRootLogin in sshd_conf
-sudo sed 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config > tmp.txt mv -f tmp.txt /etc/ssh/sshd_config
+sudo sed 's/#\?\(PermitRootLogin\s*\).*$/\1 no/' /etc/ssh/sshd_config > temp.txt 
+sudo mv -f temp.txt /etc/ssh/sshd_config
+
+# restart the service
 sudo systemctl restart sshd
