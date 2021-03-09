@@ -22,6 +22,14 @@ sudo cp /home/$user/.ssh/$user.pub ../public-keys/$user.pub
 cd ../../
 git add .
 
+echo "enter the email for github"
+read email
+echo "enter the username for github"
+read username
+
+git config user.email $email
+git config user.name $username
+
 git commit -m "adding the public key for $user" 
 git status
 git push
