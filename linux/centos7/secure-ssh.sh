@@ -47,4 +47,6 @@ sudo chmod 600 /home/$user/.ssh/authorized_keys
 # change the owner to be for the user created
 sudo chown -R $user:$user /home/$user/.ssh 
 
-
+# remove PermitRootLogin in sshd_conf
+sudo sed 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config > tmp.txt mv -f tmp.txt /etc/ssh/sshd_config
+sudo systemctl restart sshd
