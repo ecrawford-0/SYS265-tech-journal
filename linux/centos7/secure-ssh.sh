@@ -1,3 +1,4 @@
+#!/bin/bash
 # secure-ssh.sh
 # author emily crawford
 # creates a new ssh user using the $user parameter
@@ -30,11 +31,11 @@ read username
 git config user.email $email
 git config user.name $username
 
-git commit -m "adding the public key for $user" 
+git commit -m "adding the public key for $user to login onto $(hostname)" 
 git status
 git push
 
-# copy the public key to autorized keys folder
+# copy the public key to authorized keys
 sudo cp /home/$user/.ssh/$user.pub /home/$user/.ssh/authorized_keys
 
 # change permissions of .ssh file to read,write,and execute to owner of file, only 
