@@ -15,13 +15,7 @@ sudo useradd -m -d /home/$user -s /bin/bash $user
 sudo mkdir /home/$user/.ssh
 
 #download a public key and place it in user's folder
-ls ../public-keys
-echo "which key would you like to download?(leave blank for for default web01) Also write the full name including the extension"
-read key 
-
-if [ -z $key ]; then $key="id_rsa.pub"
-
-sudo cp ../public-keys/$key /home/$user/.ssh/authorized_keys
+sudo cp ../public-keys/id_rsa.pub /home/$user/.ssh/authorized_keys
 
 # change permissions of .ssh file to read,write,and execute to owner of file, only 
 sudo chmod 700 /home/$user/.ssh

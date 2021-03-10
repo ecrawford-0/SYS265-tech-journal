@@ -1,25 +1,21 @@
 #!/bin/bash
-# secure-ssh.sh
+# secure-ssh-server.sh
 # author emily crawford
-# creates a new ssh user using the $user parameter
-# adds a public key from the local repo or curled from the remote repo
-# removes root's ability to ssh in
-echo "welcome to secure secure-ssh script, this script will only allow users to ssh into a machine with a public/private key pair, rather than a password"
-echo "First a new user needs to be created, what do you want to call the new use:"
-read user # get the name for the user
+#
+# this script will secure ssh on the server end, it will generate a public/private keys
+# then upload the key to the remote repo, then this script will disable root login over ssh 
 
-# add the user  
-sudo useradd -m -d /home/$user -s /bin/bash $user
+echo "what do you want to call the public key?(leave blank to be hostnme)"
+read name
+
+if [ -z $name ]; then name=$(hostname);fi
+user=$(whoami)
  
-# create the home directory for the new user
-sudo mkdir /home/$user/.ssh
-
-echo " $user has been created, now generating keys"
 # generate the key with no password and put the files in the .ssh directory
-sudo ssh-keygen -t rsa -q -N "" -f /home/$user/.ssh/$user
+sudo ssh-keygen -t rsa -q -N "" -f /home/$user/.ssh/$name
 
 # upload the public key to github
-sudo cp /home/$user/.ssh/$user.pub ../public-keys/$user.pub
+sudo cp /home/$user/.ssh/$name.pub ../public-keys/$name.pub
 cd ../../
 git add .
 
@@ -31,21 +27,9 @@ read username
 git config user.email $email
 git config user.name $username
 
-git commit -m "adding the public key for $user to login onto $(hostname)" 
+git commit -m "adding the public key for so users can ssh via public key on $(hostname)" 
 git status
 git push
-
-# copy the private key to authorized keys
-sudo cp /home/$user/.ssh/$user /home/$user/.ssh/authorized_keys
-
-# change permissions of .ssh file to read,write,and execute to owner of file, only 
-sudo chmod 700 /home/$user/.ssh
-
-# change the permissions of the authorized keys to be read and write for the owner only
-sudo chmod 600 /home/$user/.ssh/authorized_keys
-
-# change the owner to be for the user created
-sudo chown -R $user:$user /home/$user/.ssh 
 
 # remove PermitRootLogin in sshd_conf
 sudo sed 's/#\?\(PermitRootLogin\s*\).*$/\1 no/' /etc/ssh/sshd_config > temp.txt 
