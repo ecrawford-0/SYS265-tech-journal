@@ -14,10 +14,10 @@ user=$(whoami)
 echo "$user"
  
 # generate the key with no password and put the files in the .ssh directory
-sudo ssh-keygen -t rsa -q -N "" -f /home/$user/.ssh/$user
+sudo ssh-keygen -t rsa -q -N "" -f /home/$user/.ssh/$name
 
 # upload the public key to github
-sudo cp /home/$user/.ssh/$user.pub ../public-keys/$user.pub
+sudo cp /home/$user/.ssh/$name.pub ../public-keys/$name.pub
 cd ../../
 git add .
 
