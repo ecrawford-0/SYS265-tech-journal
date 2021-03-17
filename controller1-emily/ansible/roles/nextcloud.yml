@@ -1,0 +1,6 @@
+---
+- name: nextcloud SYS265
+  hosts: nextcloud
+  become: true
+  roles:
+  - rbicker.nextcloud
