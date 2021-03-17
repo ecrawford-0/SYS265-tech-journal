@@ -1,0 +1,9 @@
+[nextcloud]
+ansible1-emily
+[webmin]
+ansible2-emily
+[windows]
+mgmt01-emily
+wks01-emily
+[windows:vars]
+ansible_shell_type=powershell
