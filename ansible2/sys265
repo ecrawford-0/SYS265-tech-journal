@@ -1,1 +1,3 @@
-deployer 	ALL=(ALL)	NOPASSWD: ALL
+
+deployer	ALL=(ALL)	NOPASSWD: ALL
+%domain\ admins@emily.local ALL=(ALL) ALL
